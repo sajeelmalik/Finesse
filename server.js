@@ -77,6 +77,7 @@ app.get("/scrape", function (req, res) {
                     // If an error occurred, send it to the client
                     return res.json(err);
                 });
+                console.log(ressult);
         });
 
         // If we were able to successfully scrape and save an Sale, send a message to the client
