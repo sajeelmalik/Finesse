@@ -1,4 +1,4 @@
-body{
+body, h3, h4{
     font-family: 'Raleway', sans-serif;
 }
 
@@ -22,4 +22,24 @@ h2{
 .product{
     margin: 10px 20px 10px 20px;
     width: 25%;
+}
+
+a:hover{
+    text-decoration: none;
+
+}
+
+.item-link, img{
+    transition: 0.2s ease-in-out;
+}
+
+.item-link:hover{
+    border-left: 2px solid #5DD39E;
+    padding-left: 3px;
+}
+
+img:hover{
+    border-left: 2px solid #5DD39E;
+    border-right: 2px solid #5DD39E;
+    border-radius: 5px;
 }

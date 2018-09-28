@@ -57,6 +57,7 @@ app.get("/scrape", function (req, res) {
     axios.get("https://www2.hm.com/en_us/sale/men/view-all.html").then(function (response) {
         // Then, we load that into cheerio and save it to $ for a shorthand selector
         var $ = cheerio.load(response.data);
+        const home = "https://www2.hm.com/";
 
         var saleItems = [];
         // Now, we grab every h2 within an article tag, and do the following:
@@ -67,10 +68,10 @@ app.get("/scrape", function (req, res) {
 
                 // Add the text and href of every link, and save them as properties of the result object
                 result.title = $(this).find("h3.item-heading").children("a").text();
-                result.link = $(this).find("div.image-container").children("a").attr("href");
+                result.link = home + $(this).find("div.image-container").children("a").attr("href");
                 result.image = $(this).find("div.image-container").children("a").children("img").attr("src");
                 // console.log($(this).find("div.image-container").children("a").children("img").attr("src"));
-                result.price = $(this).find("strong.item-price").first().text();
+                result.price = $(this).find("strong.item-price").children("span.sale").text();
 
                 saleItems.push(result);
                 // Create a new Article using the `result` object built from scraping

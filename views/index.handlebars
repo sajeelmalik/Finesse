@@ -3,29 +3,12 @@
   <p>Save your favorite sale items.</p>
   <hr>
 
-  <h2>Sale Items!</h2>
+  <h2 class = "uk-animation-slide">Sale Items!</h2>
 
-  <div class = "sale-items">
+  <div class = "sale-items" uk-scrollspy="target: > div; cls:uk-animation-fade; delay: 200">
     {{#each item}}
     {{> item/item-block}}
     {{/each}}
   </div>
-
-  {{!-- <h2>Add a Cat</h2>
-  <form class="create-form">
-
-    <div class="form-group">
-      <label for="ca">Cat Name:</label>
-      <input type="text" id="ca" name="name">
-    </div>
-
-    <div class="form-group">
-      <label for="slee">Sleepy?</label><br>
-      <input type="radio" name="sleepy" value="1" checked> Sleepy!<br>
-      <input type="radio" name="sleepy" value="0"> Awake
-    </div>
-
-    <button type="submit">Add Cat</button>
-  </form> --}}
 
 </div>
