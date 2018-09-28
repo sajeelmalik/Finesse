@@ -52,7 +52,7 @@ mongoose.connect(MONGODB_URI);
 // Routes
 
 // GET route for scraping
-app.get("/scrape", function (req, res) {
+app.get("/", function (req, res) {
     // First, we grab the body of the html with axios
     axios.get("https://www2.hm.com/en_us/sale/men/view-all.html").then(function (response) {
         // Then, we load that into cheerio and save it to $ for a shorthand selector
@@ -63,14 +63,18 @@ app.get("/scrape", function (req, res) {
         // Now, we grab every h2 within an article tag, and do the following:
         $("li.product-item").each(function (i, element) {
             // Save an empty result object
-
                 var result = {};
 
                 // Add the text and href of every link, and save them as properties of the result object
                 result.title = $(this).find("h3.item-heading").children("a").text();
                 result.link = home + $(this).find("div.image-container").children("a").attr("href");
-                result.image = $(this).find("div.image-container").children("a").children("img").attr("src");
-                // console.log($(this).find("div.image-container").children("a").children("img").attr("src"));
+                if($(this).find(".item-image").attr("src")){
+                   result.image = $(this).find(".item-image").attr("src"); 
+                }
+                else{
+                    result.image = $(this).find(".item-image").attr("data-src"); 
+                }
+                console.log(result.image);
                 result.price = $(this).find("strong.item-price").children("span.sale").text();
 
                 saleItems.push(result);
@@ -84,9 +88,8 @@ app.get("/scrape", function (req, res) {
                         // If an error occurred, send it to the client
                         return res.json(err);
                     });
-                    console.log(i);
         });
-        console.log(saleItems);
+        // console.log(saleItems);
         // If we were able to successfully scrape and save an Sale, send a message to the client
         // res.send("Scrape Complete");
         res.render("index", { item: saleItems });
