@@ -38,7 +38,10 @@ app.use(express.static("public"));
 // Connect to the Mongo DB
 
 // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+// var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+
+var MONGODB_URI = "mongodb://localhost/mongoHeadlines";
+
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
@@ -55,33 +58,37 @@ app.get("/scrape", function (req, res) {
         // Then, we load that into cheerio and save it to $ for a shorthand selector
         var $ = cheerio.load(response.data);
 
+        var saleItems = [];
         // Now, we grab every h2 within an article tag, and do the following:
-        $("li.productitem").each(function (i, element) {
+        $("li.product-item").each(function (i, element) {
             // Save an empty result object
-            var result = {};
 
-            // Add the text and href of every link, and save them as properties of the result object
-            result.title = $(this).find("h3.item-heading").text();
-            result.link = $(this).children("a").attr("href");
-            result.image = $(this).children("a").children("img").attr("src");
-            result.price = $(this).find("strong.item-price").text();
+                var result = {};
 
+                // Add the text and href of every link, and save them as properties of the result object
+                result.title = $(this).find("h3.item-heading").children("a").text();
+                result.link = $(this).find("div.image-container").children("a").attr("href");
+                result.image = $(this).find("div.image-container").children("a").children("img").attr("src");
+                // console.log($(this).find("div.image-container").children("a").children("img").attr("src"));
+                result.price = $(this).find("strong.item-price").first().text();
 
-            // Create a new Article using the `result` object built from scraping
-            db.Sale.create(result)
-                .then(function (dbSale) {
-                    // View the added result in the console
-                    console.log(dbSale);
-                })
-                .catch(function (err) {
-                    // If an error occurred, send it to the client
-                    return res.json(err);
-                });
-                console.log(ressult);
+                saleItems.push(result);
+                // Create a new Article using the `result` object built from scraping
+                db.Sale.create(result)
+                    .then(function (dbSale) {
+                        // View the added result in the console
+                        console.log(dbSale);
+                    })
+                    .catch(function (err) {
+                        // If an error occurred, send it to the client
+                        return res.json(err);
+                    });
+                    console.log(i);
         });
-
+        console.log(saleItems);
         // If we were able to successfully scrape and save an Sale, send a message to the client
-        res.send("Scrape Complete");
+        // res.send("Scrape Complete");
+        res.render("index", { item: saleItems });
     });
 });
 
