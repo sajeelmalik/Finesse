@@ -31,7 +31,7 @@ $(document).on("click", ".add-note", function () {
             // A textarea to add a new note body
             $("#notes").append("<textarea class='uk-textarea' id='bodyinput' name='body'></textarea>");
             // A button to submit a new note, with the id of the Sale saved to it
-            $("#notes").append("<button class='uk-button' btn data-id='" + data._id + "' id='savenote'>Save Note</button>");
+            $("#notes").append("<button class='uk-button note-confirm' btn data-id='" + data._id + "' id='savenote'>Save Note</button>");
 
             // If there's a note in the Sale
             if (data.note) {
@@ -72,7 +72,7 @@ $(document).on("click", "#savenote", function () {
     $("#bodyinput").val("");
 });
 
-
-$(document).scroll(function () {
-    $('#notes').css('top', $(this).scrollTop());
+//keep note area on screen
+$(window).scroll(function () {
+    $('#notes').css('margin-top', $(this).scrollTop());
 });

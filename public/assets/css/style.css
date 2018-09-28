@@ -47,7 +47,49 @@ a:hover{
 .uk-button-text{
     font-size: 18px;
 }
+
+.note-confirm{
+    transition: 0.3s ease-in-out
+}
+
+.note-confirm:hover{
+    background-color: #5DD39E;
+    color: white;
+}
+
+.note-confirm:active{
+    background-color: rgb(56, 155, 110);
+    letter-spacing: 1px;
+}
+
 img:hover{
     border-left: 2px solid #5DD39E;
     border-radius: 5px;
+}
+
+footer{
+    position: relative;
+    height: 15vh;
+    width: 100%;
+    margin-top: 20px;
+    background-image: linear-gradient(#364137, #333333);
+    color: rgb(195, 200, 240);
+}
+
+
+#github{
+    color: rgb(122, 132, 209);
+    transition: 0.3 ease-in-out;
+}
+
+.fa-github{
+    transition: 0.3 ease-in-out;
+}
+
+#github:hover{
+    color: #5DD39E;
+}
+
+#github:active{
+    color: rgb(59, 172, 121);
 }
