@@ -67,15 +67,15 @@ app.get("/", function (req, res) {
 
                 // Add the text and href of every link, and save them as properties of the result object
                 result.title = $(this).find("h3.item-heading").children("a").text();
-                result.link = home + $(this).find("div.image-container").children("a").attr("href");
+                result.link = home + $(this).find("div.image-container").children("a").attr("href"); 
+                result.price = $(this).find("strong.item-price").children("span.sale").text();
                 if($(this).find(".item-image").attr("src")){
                    result.image = $(this).find(".item-image").attr("src"); 
                 }
                 else{
                     result.image = $(this).find(".item-image").attr("data-src"); 
                 }
-                console.log(result.image);
-                result.price = $(this).find("strong.item-price").children("span.sale").text();
+               
 
                 saleItems.push(result);
                 // Create a new Article using the `result` object built from scraping
@@ -90,8 +90,7 @@ app.get("/", function (req, res) {
                     });
         });
         // console.log(saleItems);
-        // If we were able to successfully scrape and save an Sale, send a message to the client
-        // res.send("Scrape Complete");
+
         res.render("index", { item: saleItems });
     });
 });

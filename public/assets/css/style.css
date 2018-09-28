@@ -17,6 +17,7 @@ h2{
     justify-content: space-evenly;
     flex-wrap: wrap;
     margin-top: 10px;
+    width: 80%;
 }
 
 .product{
@@ -24,6 +25,10 @@ h2{
     width: 25%;
     border-top: 4px solid #5DD39E;
 }
+
+#notes {
+    width: 18%;
+  }
 
 a:hover{
     text-decoration: underline #5DD39E;
@@ -39,6 +44,9 @@ a:hover{
     letter-spacing: 1px;
 }
 
+.uk-button-text{
+    font-size: 18px;
+}
 img:hover{
     border-left: 2px solid #5DD39E;
     border-radius: 5px;

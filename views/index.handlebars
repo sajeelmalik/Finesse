@@ -3,12 +3,20 @@
   <p>Save your favorite sale items.</p>
   <hr>
 
-  <h2 class = "uk-animation-slide">Sale Items!</h2>
+  <ul class="uk-breadcrumb">
+    <li><a href="/">Home</a></li>
+    <li><a href="/saves">My Saves</a></li>
+  </ul>
 
-  <div class = "sale-items" uk-scrollspy="target: > div; cls:uk-animation-fade; delay: 200">
-    {{#each item}}
-    {{> item/item-block}}
-    {{/each}}
+  <h2 class="uk-animation-slide">Sale Items!</h2>
+
+  <div style="display:flex">
+    <div class="sale-items" uk-scrollspy="target: > div; cls:uk-animation-fade; delay: 100">
+      {{#each item}}
+      {{> item/item-block}}
+      {{/each}}
+    </div>
+
+    <div id="notes"></div>
   </div>
-
 </div>
