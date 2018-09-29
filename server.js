@@ -65,36 +65,36 @@ app.get("/", function (req, res) {
         // Iterate through each class of "product item" on the page to scrape the specific sales
         $("li.product-item").each(function (i, element) {
             // Save an empty result object
-                var result = {};
+            var result = {};
 
-                // Add the text and href of every link, and save them as properties of the result object
-                result.title = $(this).find("h3.item-heading").children("a").text();
-                result.link = home + $(this).find("div.image-container").children("a").attr("href"); 
-                result.price = $(this).find("strong.item-price").children("span.sale").text();
-                if($(this).find(".item-image").attr("src")){
-                   result.image = $(this).find(".item-image").attr("src"); 
-                }
-                else{
-                    result.image = $(this).find(".item-image").attr("data-src"); 
-                }
-               
-                // Create a new Sale using the `result` object built from scraping
-                db.Sale.create(result)
-                    .then(function (dbSale) {
-                        // Push the added result to our array to develop our JSON
-                        // console.log(dbSale);
-                        saleItems.push(dbSale);
-                    })
-                    .catch(function (err) {
-                        // If an error occurred, send it to the client
-                        return res.json(err);
-                    });
+            // Add the text and href of every link, and save them as properties of the result object
+            result.title = $(this).find("h3.item-heading").children("a").text();
+            result.link = home + $(this).find("div.image-container").children("a").attr("href");
+            result.price = $(this).find("strong.item-price").children("span.sale").text();
+            if ($(this).find(".item-image").attr("src")) {
+                result.image = $(this).find(".item-image").attr("src");
+            }
+            else {
+                result.image = $(this).find(".item-image").attr("data-src");
+            }
+            
+            saleItems.push(result);
         });
-        // console.log(saleItems);
+        // Create a new Sale using the `result` object built from scraping
+        db.Sale.insertMany(saleItems)
+            .then(function (dbSale) {
+                // Push the added result to our array to develop our JSON
+                // console.log(dbSale);
+                res.render("index", { item: dbSale });
+            })
+            .catch(function (err) {
+                // If an error occurred, send it to the client
+                return res.json(err);
+            });
 
-        setTimeout(function(){
-            res.render("index", { item: saleItems });
-        }, 4000)
+        // setTimeout(function () {
+        //     res.render("index", { item: saleItems });
+        // }, 4000)
     });
 });
 
@@ -146,6 +146,15 @@ app.post("/sales/:id", function (req, res) {
             // If an error occurred, send it to the client
             res.json(err);
         });
+});
+
+app.get("/saved", function (req, res) {
+    db.Sale.find({ saved: true }).populate("note").then(function (data) {
+        //   console.log(data)
+        res.render("index", { item: data });
+    }).catch(function (err) {
+        res.json(err)
+    })
 });
 
 // Start the server

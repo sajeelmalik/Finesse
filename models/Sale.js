@@ -17,6 +17,7 @@ var SaleSchema = new Schema({
   // `link` is required and of type String
   link: {
     type: String,
+    unique: true,
     required: true
   },
   // `image` is required and of type String
@@ -28,6 +29,10 @@ var SaleSchema = new Schema({
   price: {
     type: String,
     required: true
+  },
+  saved: {
+    type: Boolean,
+    default: false
   },
   // `note` is an object that stores a Note id
   // The ref property links the ObjectId to the Note model
