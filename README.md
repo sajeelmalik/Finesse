@@ -4,6 +4,7 @@ Scrape the most recent clothing sale items at affordable prices, comment and wri
 
 Finesse is a Full-Stack Application! 
 
+* Powered by node.js, Express.js, MongoDB, mongoose.js *Object-relational Mapping (ORM)*, Axios, Cheerio, and Handlebars.js. Utilizes MVC and RESTful architecture.
 
 *Further design development underway. The user will be able to save multiple items from different websites in their own collection.*
 #
