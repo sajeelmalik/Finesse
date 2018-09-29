@@ -1,15 +1,5 @@
-// Grab the sales as a json
 
-// $.getJSON("/sales", function(data) {
-//     // For each one
-//     for (var i = 0; i < data.length; i++) {
-//       // Display the apropos information on the page
-//       $("#sales").append("<p data-id='" + data[i]._id + "'uk-tooltip='Add a Note!''>" + data[i].title + "<br />" + data[i].link + "</p>");
-//     }
-//   });
-
-
-// Whenever someone clicks Add Note
+// On-click listener for Add Note
 $(document).on("click", ".add-note", function () {
     // Empty the notes from the note section
     $("#notes").empty();
@@ -23,7 +13,7 @@ $(document).on("click", ".add-note", function () {
     })
         // With that done, add the note information to the page
         .then(function (data) {
-            console.log(data);
+            console.log("Note Data: ", data);
             // The title of the Sale
             $("#notes").append("<h2 class='uk-animation-slide-top-medium'>" + data.title + "</h2>");
             // An input to enter a new title

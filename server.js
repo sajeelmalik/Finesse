@@ -61,7 +61,8 @@ app.get("/", function (req, res) {
         const home = "https://www2.hm.com/";
 
         var saleItems = [];
-        // Now, we grab every h2 within an article tag, and do the following:
+
+        // Iterate through each class of "product item" on the page to scrape the specific sales
         $("li.product-item").each(function (i, element) {
             // Save an empty result object
                 var result = {};
@@ -77,13 +78,12 @@ app.get("/", function (req, res) {
                     result.image = $(this).find(".item-image").attr("data-src"); 
                 }
                
-
-                saleItems.push(result);
-                // Create a new Article using the `result` object built from scraping
+                // Create a new Sale using the `result` object built from scraping
                 db.Sale.create(result)
                     .then(function (dbSale) {
-                        // View the added result in the console
-                        console.log(dbSale);
+                        // Push the added result to our array to develop our JSON
+                        // console.log(dbSale);
+                        saleItems.push(dbSale);
                     })
                     .catch(function (err) {
                         // If an error occurred, send it to the client
@@ -92,7 +92,9 @@ app.get("/", function (req, res) {
         });
         // console.log(saleItems);
 
-        res.render("index", { item: saleItems });
+        setTimeout(function(){
+            res.render("index", { item: saleItems });
+        }, 4000)
     });
 });
 
