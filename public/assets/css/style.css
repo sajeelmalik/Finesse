@@ -1,3 +1,7 @@
+#main{
+    min-height: 85vh;
+}
+
 body, h3, h4, h5{
     font-family: 'Raleway', sans-serif;
 }
@@ -48,6 +52,21 @@ a:hover{
     font-size: 18px;
 }
 
+.save-note{
+    transition: 0.2s ease-in-out;
+    border-radius: 20px;
+}
+
+.save-note:hover{
+    background-color: #5DD39E;
+    color: white;
+}
+
+.save-note:active{
+    background-color: rgb(56, 155, 110);
+    letter-spacing: 1px;
+}
+
 .note-confirm{
     transition: 0.3s ease-in-out
 }
@@ -73,7 +92,7 @@ footer{
     width: 100%;
     margin-top: 20px;
     background-image: linear-gradient(#364137, #333333);
-    color: rgb(195, 200, 240);
+    color: rgb(218, 222, 250);
 }
 
 
