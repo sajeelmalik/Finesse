@@ -13,8 +13,7 @@ var mongoose = require("mongoose");
 var axios = require("axios");
 var cheerio = require("cheerio");
 
-// Require all models
-var db = require("./models");
+
 
 var PORT = process.env.PORT || 3000;
 
@@ -43,12 +42,13 @@ var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines
 
 // var MONGODB_URI = "mongodb://localhost/mongoHeadlines";
 
-
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
 
+// Require all models
+var db = require("./models");
 
 // Routes
 
@@ -67,7 +67,7 @@ app.get("/", function (req, res) {
             // Save an empty result object
             var result = {};
 
-            // Add the text and href of every link, and save them as properties of the result object
+            // Add text and href of every link, and save them as properties of the result object
             result.title = $(this).find("h3.item-heading").children("a").text();
             result.link = home + $(this).find("div.image-container").children("a").attr("href");
             result.price = $(this).find("strong.item-price").children("span.sale").text();
@@ -88,7 +88,7 @@ app.get("/", function (req, res) {
                 res.render("index", { item: dbSale });
             })
             .catch(function (err) {
-                // If an error occurred, send it to the client
+                // send error to client
                 return res.json(err);
             });
 
