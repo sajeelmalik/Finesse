@@ -13,8 +13,6 @@ var mongoose = require("mongoose");
 var axios = require("axios");
 var cheerio = require("cheerio");
 
-
-
 var PORT = process.env.PORT || 3000;
 
 // Initialize Express
@@ -54,6 +52,7 @@ var db = require("./models");
 
 // GET route for scraping
 app.get("/", function (req, res) {
+    return res.send("hello");
     // First, we grab the body of the html with axios
     axios.get("https://www2.hm.com/en_us/sale/men/view-all.html").then(function (response) {
         // Then, we load that into cheerio and save it to $ for a shorthand selector
