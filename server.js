@@ -78,19 +78,28 @@ app.get("/", function (req, res) {
             
             saleItems.push(result);
         });
-        return res.send("hello");
+
+        // return res.send("hello"); //temporary debugging test
 
         // Create a new Sale using the `result` object built from scraping
         db.Sale.insertMany(saleItems)
-            .then(function (dbSale) {
-                // Push the added result to our array to develop our JSON
-                // console.log(dbSale);
-                res.render("index", { item: dbSale });
-            })
-            .catch(function (err) {
-                // send error to client
-                return res.json(err);
-            });
+        try {
+            throw console.log("try")
+        } catch (err) {
+            console.log(err)
+        } finally {
+            console.log("finally")
+        }
+            // .then(function (dbSale) {
+            //     // Push the added result to our array to develop our JSON
+            //     // console.log(dbSale);
+            //     res.render("index", { item: dbSale });
+            // })
+            // .catch(function (err) {
+            //     // send error to client
+            //     return res.json(err);
+            // });
+            
 
     });
 });
