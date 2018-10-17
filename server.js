@@ -80,7 +80,7 @@ app.get("/", function (req, res) {
             saleItems.push(result);
         });
 
-        return res.send("hello"); //temporary debugging test
+        // return res.send("hello"); //temporary debugging test
 
         // Create a new Sale using the `result` object built from scraping
         db.Sale.insertMany(saleItems)
