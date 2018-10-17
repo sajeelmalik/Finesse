@@ -83,6 +83,19 @@ app.get("/", function (req, res) {
 
         // Create a new Sale using the `result` object built from scraping
         db.Sale.insertMany(saleItems)
+        .then(function (dbSale) {
+                // Push the added result to our array to develop our JSON
+                // console.log(dbSale);
+                try {
+                    console.log("test")
+                } catch (err) {
+                    console.log(err)
+                } finally {
+                    res.render("index", { item: dbSale });
+                }
+            })
+        
+            //debugging attempt 2
         // try {
         //     throw console.log("try")
         // } catch (err) {
@@ -90,15 +103,17 @@ app.get("/", function (req, res) {
         // } finally {
         //     console.log("finally")
         // }
-            .then(function (dbSale) {
-                // Push the added result to our array to develop our JSON
-                // console.log(dbSale);
-                res.render("index", { item: dbSale });
-            })
-            .catch(function (err) {
-                // send error to client
-                return res.json(err);
-            });
+
+        //Initial attempt
+            // .then(function (dbSale) {
+            //     // Push the added result to our array to develop our JSON
+            //     // console.log(dbSale);
+            //     res.render("index", { item: dbSale });
+            // })
+            // .catch(function (err) {
+            //     // send error to client
+            //     return res.json(err);
+            // });
             
 
     });
