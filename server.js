@@ -81,25 +81,25 @@ app.get("/", function (req, res) {
             // Create a new Sale using the `result` object built from scraping
             db.Sale.insertMany(saleItems)
                 //Initial attempt - works perfectly locally 
-                .then(function (dbSale) {
-                    // Push the added result to our array to develop our JSON - here, I attempted to redirect to /home instead of directly rendering the index as a potential solution to an asynchornicity problem
+                // .then(function (dbSale) {
+                //     // Push the added result to our array to develop our JSON - here, I attempted to redirect to /home instead of directly rendering the index as a potential solution to an asynchornicity problem
 
-                    // res.render("index", { item: dbSale });
-                    res.redirect("/home")
-                })
-                .catch(function (err) {
-                    // send error to client
-                    return (err);
-                });
+                //     // res.render("index", { item: dbSale });
+                //     res.redirect("/home")
+                // })
+                // .catch(function (err) {
+                //     // send error to client
+                //     return res.json(err);
+                // });
 
             //====Debugging attempt 2 - try/catch/finally
-            // try {
-            //     throw console.log("try")
-            // } catch (err) {
-            //     console.log(err)
-            // } finally {
-            //     console.log("finally")
-            // }
+            try {
+                res.redirect("/home")
+            } catch (err) {
+                console.log(err)
+            } finally {
+                res.redirect("/home")
+            }
 
             //====Debugging attempt 3 - timeout
             // setTimeout(function(){
@@ -116,7 +116,7 @@ app.get("/", function (req, res) {
         //====Debugging attempt 4 - add a catch to the axios.get
         .catch(function (err) {
             // send error to client
-            return (err);
+            return res.json(err);
         });
 
 
