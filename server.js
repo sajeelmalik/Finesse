@@ -53,7 +53,8 @@ var db = require("./models");
 // GET route for scraping
 app.get("/", function (req, res) {
     // First, we grab the body of the html with axios
-    axios.get("https://www2.hm.com/en_us/sale/men/view-all.html").then(function (response) {
+    axios.get("https://www2.hm.com/en_us/sale/men/view-all.html")
+        .then(function (response) {
         // Then, we load that into cheerio and save it to $ for a shorthand selector
         var $ = cheerio.load(response.data);
         const home = "https://www2.hm.com/";
@@ -113,7 +114,13 @@ app.get("/", function (req, res) {
 
             
 
+    })
+    .catch(function (err) {
+        // send error to client
+        return res.json(err);
     });
+    
+    
 });
 
 // Route for getting all Sales from the db
