@@ -79,27 +79,27 @@ app.get("/", function (req, res) {
             // return res.send("hello"); //temporary debugging test
 
             // Create a new Sale using the `result` object built from scraping
-            // db.Sale.insertMany(saleItems)
-                //Initial attempt - works perfectly locally 
-                // .then(function (dbSale) {
-                //     // Push the added result to our array to develop our JSON - here, I attempted to redirect to /home instead of directly rendering the index as a potential solution to an asynchornicity problem
+            db.Sale.insertMany(saleItems)
+                // Initial attempt - works perfectly locally 
+                .then(function (dbSale) {
+                    // Push the added result to our array to develop our JSON - here, I attempted to redirect to /home instead of directly rendering the index as a potential solution to an asynchornicity problem
 
-                //     // res.render("index", { item: dbSale });
-                //     res.redirect("/home")
-                // })
-                // .catch(function (err) {
-                //     // send error to client
-                //     return res.json(err);
-                // });
+                    // res.render("index", { item: dbSale });
+                    res.redirect("/home")
+                })
+                .catch(function (err) {
+                    // send error to client
+                    return res.json(err);
+                });
 
             //====Debugging attempt 2 - try/catch/finally
-            try {
-                db.Sale.insertMany(saleItems)
-            } catch (err) {
-                console.log(err)
-            } finally {
-                res.redirect("/home")
-            }
+            // try {
+            //     db.Sale.insertMany(saleItems)
+            // } catch (err) {
+            //     console.log(err)
+            // } finally {
+            //     res.redirect("/home")
+            // }
 
             //====Debugging attempt 3 - timeout
             // setTimeout(function(){
