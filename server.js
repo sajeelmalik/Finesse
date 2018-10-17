@@ -79,14 +79,21 @@ app.get("/", function (req, res) {
             saleItems.push(result);
         });
 
-        // return res.send("hello"); //temporary debugging test
+        return res.send("hello"); //temporary debugging test
 
         // Create a new Sale using the `result` object built from scraping
         db.Sale.insertMany(saleItems)
-            .then(function(dbSale){
-                console.log("worked");
-        })
-        
+        //Initial attempt - works perfectly locally
+            .then(function (dbSale) {
+                // Push the added result to our array to develop our JSON
+                // console.log(dbSale);
+                res.render("index", { item: dbSale });
+            })
+            .catch(function (err) {
+                // send error to client
+                return res.json(err);
+            });
+
             //debugging attempt 2
         // try {
         //     throw console.log("try")
@@ -96,16 +103,14 @@ app.get("/", function (req, res) {
         //     console.log("finally")
         // }
 
-        //Initial attempt
-            // .then(function (dbSale) {
-            //     // Push the added result to our array to develop our JSON
-            //     // console.log(dbSale);
-            //     res.render("index", { item: dbSale });
-            // })
-            // .catch(function (err) {
-            //     // send error to client
-            //     return res.json(err);
-            // });
+        // setTimeout(function(){
+        //     axios.get("/sales")
+        //         // With that done, add the note information to the page
+        //         .then(function (data) {
+        //             res.render("index", { item: data });
+        //         });
+        // }, 5000)
+
             
 
     });
