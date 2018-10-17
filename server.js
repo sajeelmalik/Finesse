@@ -7,9 +7,6 @@ var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
 
-// Our scraping tools
-// Axios is a promised-based http library, similar to jQuery's Ajax method
-// It works on the client and on the server
 var axios = require("axios");
 var cheerio = require("cheerio");
 
@@ -38,12 +35,11 @@ app.use(express.static("public"));
 
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 
-// var MONGODB_URI = "mongodb://localhost/mongoHeadlines";
-
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
+// Added useNewUrlParser based on current mongo version (4.0.2)
 mongoose.Promise = Promise;
-mongoose.connect(MONGODB_URI);
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 // Require all models
 var db = require("./models");
@@ -55,76 +51,78 @@ app.get("/", function (req, res) {
     // First, we grab the body of the html with axios
     axios.get("https://www2.hm.com/en_us/sale/men/view-all.html")
         .then(function (response) {
-        // Then, we load that into cheerio and save it to $ for a shorthand selector
-        var $ = cheerio.load(response.data);
-        const home = "https://www2.hm.com/";
+            // Then, we load that into cheerio and save it to $ for a shorthand selector
+            var $ = cheerio.load(response.data);
+            const home = "https://www2.hm.com/";
 
-        var saleItems = [];
+            var saleItems = [];
 
-        // Iterate through each class of "product item" on the page to scrape the specific sales
-        $("li.product-item").each(function (i, element) {
-            // Save an empty result object
-            var result = {};
+            // Iterate through each class of "product item" on the page to scrape the specific sales
+            $("li.product-item").each(function (i, element) {
+                // Save an empty result object
+                var result = {};
 
-            // Add text and href of every link, and save them as properties of the result object
-            result.title = $(this).find("h3.item-heading").children("a").text();
-            result.link = home + $(this).find("div.image-container").children("a").attr("href");
-            result.price = $(this).find("strong.item-price").children("span.sale").text();
-            if ($(this).find(".item-image").attr("src")) {
-                result.image = $(this).find(".item-image").attr("src");
-            }
-            else {
-                result.image = $(this).find(".item-image").attr("data-src");
-            }
-            
-            saleItems.push(result);
-        });
+                // Add text and href of every link, and save them as properties of the result object
+                result.title = $(this).find("h3.item-heading").children("a").text();
+                result.link = home + $(this).find("div.image-container").children("a").attr("href");
+                result.price = $(this).find("strong.item-price").children("span.sale").text();
+                if ($(this).find(".item-image").attr("src")) {
+                    result.image = $(this).find(".item-image").attr("src");
+                }
+                else {
+                    result.image = $(this).find(".item-image").attr("data-src");
+                }
 
-        // return res.send("hello"); //temporary debugging test
-
-        // Create a new Sale using the `result` object built from scraping
-        db.Sale.insertMany(saleItems)
-        //Initial attempt - works perfectly locally
-            .then(function (dbSale) {
-                // Push the added result to our array to develop our JSON
-                // console.log(dbSale);
-                // res.render("index", { item: dbSale });
-                res.redirect("/home")
-            })
-            .catch(function (err) {
-                // send error to client
-                return res.json(err);
+                saleItems.push(result);
             });
 
-            //debugging attempt 2
-        // try {
-        //     throw console.log("try")
-        // } catch (err) {
-        //     console.log(err)
-        // } finally {
-        //     console.log("finally")
-        // }
+            // return res.send("hello"); //temporary debugging test
 
-        // setTimeout(function(){
-        //     axios.get("/sales")
-        //         // With that done, add the note information to the page
-        //         .then(function (data) {
-        //             res.render("index", { item: data });
-        //         });
-        // }, 5000)
+            // Create a new Sale using the `result` object built from scraping
+            db.Sale.insertMany(saleItems)
+                //Initial attempt - works perfectly locally 
+                .then(function (dbSale) {
+                    // Push the added result to our array to develop our JSON - here, I attempted to redirect to /home instead of directly rendering the index as a potential solution to an asynchornicity problem
 
-            
+                    // res.render("index", { item: dbSale });
+                    res.redirect("/home")
+                })
+                .catch(function (err) {
+                    // send error to client
+                    return res.json(err);
+                });
 
-    })
-    .catch(function (err) {
-        // send error to client
-        return res.json(err);
-    });
-    
-    
+            //====Debugging attempt 2 - try/catch/finally
+            // try {
+            //     throw console.log("try")
+            // } catch (err) {
+            //     console.log(err)
+            // } finally {
+            //     console.log("finally")
+            // }
+
+            //====Debugging attempt 3 - timeout
+            // setTimeout(function(){
+            //     axios.get("/sales")
+            //         // With that done, add the note information to the page
+            //         .then(function (data) {
+            //             res.render("index", { item: data });
+            //         });
+            // }, 5000)
+
+
+
+        })
+        //====Debugging attempt 4 - add a catch to the axios.get
+        .catch(function (err) {
+            // send error to client
+            return res.json(err);
+        });
+
+
 });
 
-// Route for getting all Sales from the db
+// Route for getting all Sales from the db 
 app.get("/home", function (req, res) {
     // Grab every document in the Sales collection
     db.Sale.find({})
