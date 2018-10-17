@@ -83,17 +83,9 @@ app.get("/", function (req, res) {
 
         // Create a new Sale using the `result` object built from scraping
         db.Sale.insertMany(saleItems)
-        .then(function (dbSale) {
-                // Push the added result to our array to develop our JSON
-                // console.log(dbSale);
-                try {
-                    console.log("test")
-                } catch (err) {
-                    console.log(err)
-                } finally {
-                    res.render("index", { item: dbSale });
-                }
-            })
+            .then(function(dbSale){
+                console.log("worked");
+        })
         
             //debugging attempt 2
         // try {
