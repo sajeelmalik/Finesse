@@ -89,7 +89,7 @@ app.get("/", function (req, res) {
                 })
                 .catch(function (err) {
                     // send error to client
-                    return res.json(err);
+                    return (err);
                 });
 
             //====Debugging attempt 2 - try/catch/finally
@@ -116,7 +116,7 @@ app.get("/", function (req, res) {
         //====Debugging attempt 4 - add a catch to the axios.get
         .catch(function (err) {
             // send error to client
-            return res.json(err);
+            return (err);
         });
 
 
