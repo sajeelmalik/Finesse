@@ -13,7 +13,7 @@ var mongoose = require("mongoose");
 var axios = require("axios");
 var cheerio = require("cheerio");
 
-var PORT = process.env.PORT || 3000;
+var PORT = process.env.PORT || 8000;
 
 // Initialize Express
 var app = express();
@@ -88,7 +88,8 @@ app.get("/", function (req, res) {
             .then(function (dbSale) {
                 // Push the added result to our array to develop our JSON
                 // console.log(dbSale);
-                res.render("index", { item: dbSale });
+                // res.render("index", { item: dbSale });
+                res.redirect("/home")
             })
             .catch(function (err) {
                 // send error to client
@@ -122,6 +123,21 @@ app.get("/", function (req, res) {
     
     
 });
+
+// Route for getting all Sales from the db
+app.get("/home", function (req, res) {
+    // Grab every document in the Sales collection
+    db.Sale.find({})
+        .then(function (dbSale) {
+            // If we were able to successfully find Sales, send them back to the client
+            res.render("index", { item: dbSale });
+        })
+        .catch(function (err) {
+            // If an error occurred, send it to the client
+            res.json(err);
+        });
+});
+
 
 // Route for getting all Sales from the db
 app.get("/sales", function (req, res) {
