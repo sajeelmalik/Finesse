@@ -79,7 +79,7 @@ app.get("/", function (req, res) {
             // return res.send("hello"); //temporary debugging test
 
             // Create a new Sale using the `result` object built from scraping
-            db.Sale.insertMany(saleItems)
+            // db.Sale.insertMany(saleItems)
                 //Initial attempt - works perfectly locally 
                 // .then(function (dbSale) {
                 //     // Push the added result to our array to develop our JSON - here, I attempted to redirect to /home instead of directly rendering the index as a potential solution to an asynchornicity problem
@@ -94,7 +94,7 @@ app.get("/", function (req, res) {
 
             //====Debugging attempt 2 - try/catch/finally
             try {
-                res.redirect("/home")
+                db.Sale.insertMany(saleItems)
             } catch (err) {
                 console.log(err)
             } finally {
