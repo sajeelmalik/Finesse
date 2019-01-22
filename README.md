@@ -95,7 +95,7 @@ axios.get("https://www2.hm.com/en_us/sale/men/view-all.html").then(function (res
                     });
         });
 ```
-Handlebars.js provides the unique utility of allowing "blocks" for elements that will be recurrently rendered on the page. Since each scraped sale item needed to be rendered with a consistent format, I was able to construct an *item-block* similar to a React component. Handlebars' native `{{#each}}` iterator power the generation of the items; that way, I would not need to use jQuery and Javascript iteration to dynamically append these elements.
+Handlebars.js provides the unique utility of allowing "blocks" for elements that will be recurrently rendered on the page. Since each scraped sale item needed to be rendered with a consistent format, I was able to construct an *item-block* similar to a React component. Handlebars' native `{{#each}}` iterator powers the generation of the items; that way, I would not need to use jQuery and Javascript iteration to dynamically append these elements.
 ```HTML
 <!-- In index.handlebars -->
 
@@ -125,7 +125,7 @@ Handlebars.js provides the unique utility of allowing "blocks" for elements that
 
 * While utilizing **handlebars.js**, I uncovered that *main.handlebars* has very explicit syntax requirements. I attempted to properly link the CSS and JS files based on their exact routes, but handlebars required me to list them starting with /assets, even though assets was an internal directory in a separate folder. 
 
-* Since some of the images on H&M's website were dynamically generated, I had to more deeply scrape through the site to obtain all the necessary information. While some of the images were not directly rendered on the page, their parent `divs` were, acting as placeholders for further dynamically rendered content. Inside the parent `divs`, unrealized `img` tags were housed, each of which contained a data-attribute called `data-src` from which the image would obtain its "true" source upon page scroll. As such, I was able to scrape these attributes and generate the images on my page.
+* Since some of the images on H&M's website were dynamically generated, I had to more deeply scrape through the site to obtain all the necessary information. While some of the images were not directly rendered on the page, their parent `divs` were, acting as placeholders for further dynamically rendered content. Inside the invisible parent `divs`, unrealized `img` tags were housed, each of which contained a data-attribute called `data-src` from which the image would obtain its "true" source upon page scroll. As such, I was able to scrape these attributes and generate the images on my page.
 
 * Utilizing mLab MongoDB service for Heroku deployment
 
