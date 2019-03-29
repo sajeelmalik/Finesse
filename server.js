@@ -136,6 +136,16 @@ app.get("/home", function (req, res) {
         });
 });
 
+// Route for getting signup page
+app.get("/signup", function (req, res) {
+    res.render("signup");
+});
+
+// Route for getting splash page
+app.get("/splash", function (req, res) {
+    res.render("splash");
+});
+
 
 // Route for getting all Sales from the db
 app.get("/sales", function (req, res) {
