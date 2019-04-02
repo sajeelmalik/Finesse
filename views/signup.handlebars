@@ -1,7 +1,24 @@
-<div id="signup-left">
-      <h1 id="signup-title">Finesse</h1>
-</div>
+<div style="display: flex">
+      <div id="signup-left" class="uk-animation-slide-left-medium">
+            <h1 class="auth-title" style="font-size: 6rem">Finesse</h1>
+      </div>
 
-<div id="signup-right">
+      <div id="signup-right" class="uk-animation-fade">
+            <div class="" id="right-content">
+                  <h2>Sign Up for Finesse</h2>
+                  <form class="uk-form" action="">
+                        <b><label class="uk-form-label" for="userName">Name: </label></b>
+                        <input class="uk-input" name='userName' type="text" required>
+                        <b><label class="uk-form-label" for="userEmail">Email : </label></b>
+                        <input class="uk-input" name='userEmail' type="text" required>
+                        <b><label class="uk-form-label" for="userPassword">Password: </label></b>
+                        <input class="uk-input" name='userPassword' type="password" required>
+                  </form>
+                  <a href="/home" class="uk-button signup-submit">Sign Up</a>
+                  {{!-- <p>Or, Sign Up with:</p>
+                  <a href="/" class="uk-button uk-button-primary fb-submit">Facebook</a>
+                  <a href="/" class="uk-button uk-button-secondary google-submit">Google</a> --}}
 
+            </div>
+      </div>
 </div>

@@ -141,6 +141,11 @@ app.get("/signup", function (req, res) {
     res.render("signup");
 });
 
+// Route for getting login page
+app.get("/login", function (req, res) {
+    res.render("login");
+});
+
 // Route for getting splash page
 app.get("/splash", function (req, res) {
     res.render("splash");

@@ -1,6 +1,8 @@
 
 // On-click listener for Add Note
-$(document).on("click", ".add-note", function () {
+$(document).on("click", ".add-note", function (event) {
+    event.preventDefault();
+
     // Empty the notes from the note section
     $("#notes").empty();
     // Save the id from the element 
@@ -17,7 +19,7 @@ $(document).on("click", ".add-note", function () {
             // The title of the Sale
             $("#notes").append("<h2 class='uk-animation-slide-top-medium'>" + data.title + "</h2>");
             // An input to enter a new title
-            $("#notes").append("<input class= 'uk-input' id='titleinput' name='title' >");
+            $("#notes").append("<input class= 'uk-input' id='titleinput' name='title' placeholder = 'Subject'>");
             // A textarea to add a new note body
             $("#notes").append("<textarea class='uk-textarea' id='bodyinput' name='body'></textarea>");
             // A button to submit a new note, with the id of the Sale saved to it
@@ -34,7 +36,8 @@ $(document).on("click", ".add-note", function () {
 });
 
 // When you click the savenote button
-$(document).on("click", "#savenote", function () {
+$(document).on("click", "#savenote", function (event) {
+    // event.preventDefault();
     // Grab the id associated with the Sale from the submit button
     var thisId = $(this).attr("data-id");
 
@@ -63,36 +66,45 @@ $(document).on("click", "#savenote", function () {
 });
 
 
-// When you click the savenote button
-$(document).on("click", "#savenote", function () {
-    // Grab the id associated with the Sale from the submit button
-    var thisId = $(this).attr("data-id");
+// // When you click the savenote button
+// $(document).on("click", "#savenote", function () {
+//     // Grab the id associated with the Sale from the submit button
+//     var thisId = $(this).attr("data-id");
 
-    // Run a POST request to change the note, using what's entered in the inputs
-    $.ajax({
-        method: "POST",
-        url: "/sales/" + thisId,
-        data: {
-            // Value taken from title input
-            title: $("#titleinput").val(),
-            // Value taken from note textarea
-            body: $("#bodyinput").val()
-        }
-    })
-        // With that done
-        .then(function (data) {
-            // Log the response
-            console.log(data);
-            // Empty the notes section
-            $("#notes").empty();
-        });
+//     // Run a POST request to change the note, using what's entered in the inputs
+//     $.ajax({
+//         method: "POST",
+//         url: "/sales/" + thisId,
+//         data: {
+//             // Value taken from title input
+//             title: $("#titleinput").val(),
+//             // Value taken from note textarea
+//             body: $("#bodyinput").val()
+//         }
+//     })
+//         // With that done
+//         .then(function (data) {
+//             // Log the response
+//             console.log(data);
+//             // Empty the notes section
+//             $("#notes").empty();
+//         });
 
-    // Also, remove the values entered in the input and textarea for note entry
-    $("#titleinput").val("");
-    $("#bodyinput").val("");
-});
+//     // Also, remove the values entered in the input and textarea for note entry
+//     $("#titleinput").val("");
+//     $("#bodyinput").val("");
+// });
 
 //keep note area on screen
 $(window).scroll(function () {
     $('#notes').css('margin-top', $(this).scrollTop());
 });
+
+
+// Animations for Splash page
+
+$("#login-button").on("click", function(){
+    $("#splash").addClass("uk-animation-reverse");
+});
+
+

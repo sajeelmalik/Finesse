@@ -49,6 +49,7 @@ This is a full-stack application, so no need to download anything!
 ```require("cheerio");```
 6. Body Parser - middleware technology for JSON formatting
 ``` require("body-parser"); ```
+- **NOTE**: *Express 4.0+ has a built-in method for parsing using urlencoded*
 7. Path - simplifies directories and filepaths through Node
 ``` require("path"); ```
 8. Morgan - logging middleware for node.js HTTP apps

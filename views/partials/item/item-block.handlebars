@@ -1,15 +1,28 @@
-<div class="product">
+<div class="product uk-card uk-card-default">
 	<a href={{link}} target="_blank">
 		<h3 class="item-link">{{title}}</h3>
 	</a>
 
-	<h5>Sale Price: <span>{{price}}</span></h5>
+	<div class="item-product">
+		<a href={{link}} target="_blank"><img src={{image}} class="item-image"></a>
+		<a href={{link}} target="_blank" class="item-image-overlay">
+			{{!-- <p class="item-name">{{link}}</p> --}}
+			<div class="product-content">
+				<h4 style="color: white">Sale Price: <span>{{price}}</span></h4>
+				<div class="uk-flex uk-flex-between">
+					<button class="uk-button add-note" data-id="{{_id}}"><i class="fas fa-pen"></i></button>
+					<button class="uk-button save-note"  data-id="{{_id}}"><i class="fas fa-shopping-bag"></i></button>
+				</div>
+			</div>
 
-	<a href={{link}} target="_blank"><img src={{image}} class="item-image"></a>
-	<br><br>
+		</a>
+	</div>
+
+	{{!-- <h5>Sale Price: <span>{{price}}</span></h5>
+	<br>
 	<div class="uk-flex uk-flex-between">
 		<button class="uk-button uk-button-text add-note" data-id="{{_id}}">Add Note</button>
 		<button class="uk-button save-note" data-id="{{_id}}">save</button>
-	</div>
+	</div> --}}
 
 </div>
