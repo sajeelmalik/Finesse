@@ -1,3 +1,6 @@
+// Usable globals
+var modalOpened = false;
+
 
 // On-click listener for Add Note
 $(document).on("click", ".add-note", function (event) {
@@ -103,8 +106,17 @@ $(window).scroll(function () {
 
 // Animations for Splash page
 
-$("#login-button").on("click", function(){
+$(document).on("click", "#login-button", function () {
     $("#splash").addClass("uk-animation-reverse");
+});
+
+
+$(document).on("click", "#about", function (event) {
+    if (!modalOpened) {
+        console.log("clicked")
+        $("#modal-full").css("visibility", "visible");
+        modalOpened = true;
+    }
 });
 
 
