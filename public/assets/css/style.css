@@ -95,7 +95,10 @@ h2{
 }
 
 #notes {
-    width: 18%;
+    position: fixed;
+    width: 15%;
+    right: 10%;
+    margin-top: 10px;
     /* display: flex;
     flex-direction: column;
     align-content: center;
@@ -146,8 +149,6 @@ a:hover{
     justify-content: center;
     background-color: rgb(233, 230, 230);
     text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.627);
-    text-shadow: 0px 0px 4px rgba(153, 69, 69, 0.627);
-
     box-shadow: 0px 2px 3px rgb(56, 155, 110, 0.6);
 }
 
@@ -210,6 +211,10 @@ footer{
 
 
 /* Sign Up */
+
+#signup-page{
+    display: flex;
+}
 
 #signup-left{
     display: flex;
@@ -317,7 +322,7 @@ label{
     justify-content: center;
     align-items: center;
     justify-items: center;
-    background-color: rgba(93, 211, 158, 0.9);
+    background-color: rgba(93, 211, 158, 0.8);
  
 
 }
@@ -340,12 +345,16 @@ label{
 }
 
 .login-submit{
+    opacity: 0;
     background-color: white;
     color: #5DD39E; 
     border-radius: 20px;
     box-shadow: 0px 2px 2px rgba(96, 156, 129, 0.2);
     transition: 0.2s ease-in-out;
-
+    animation-name: fade-in;
+    animation-duration: 1.0s;
+    animation-delay: .2s;
+    animation-fill-mode: forwards;
 }
 
 
@@ -410,6 +419,10 @@ label{
     /* letter-spacing: 1px; */
 }
 
+.login-buttons{
+    width: 18%;
+}
+
 .login-button{
     transition: 0.2s ease-in-out;
     border-radius: 20px;
@@ -456,5 +469,21 @@ label{
     }
     to {
         opacity: 1;
+    }
+}
+
+@media only screen and (max-width: 769px){
+    .login-buttons{
+        width: 30%;
+    }
+}
+
+
+@media only screen and (max-width: 430px){
+    .login-buttons{
+        width: 80%;
+    }
+    #signup-page{
+        flex-direction: column;
     }
 }

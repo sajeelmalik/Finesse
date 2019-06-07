@@ -20,6 +20,8 @@ $(document).on("click", ".add-note", function (event) {
         .then(function (data) {
             console.log("Note Data: ", data);
             // The title of the Sale
+            $("#notes").show();
+
             $("#notes").append("<h2 class='uk-animation-slide-top-medium'>" + data.title + "</h2>");
             // An input to enter a new title
             $("#notes").append("<input class= 'uk-input' id='titleinput' name='title' placeholder = 'Subject'>");
@@ -59,8 +61,14 @@ $(document).on("click", "#savenote", function (event) {
         .then(function (data) {
             // Log the response
             console.log(data);
-            // Empty the notes section
-            $("#notes").empty();
+            // Hide and empty the notes section
+            $("#notes").hide(500, function(){
+                $("#notes").empty();
+
+            });
+            // setTimeout(function () {
+            //     $("#notes").empty();
+            // }, 500);
         });
 
     // Also, remove the values entered in the input and textarea for note entry
@@ -107,9 +115,9 @@ $(document).on("click", ".save-sale", function (event) {
 });
 
 //keep note area on screen
-$(window).scroll(function () {
-    $('#notes').css('margin-top', $(this).scrollTop());
-});
+// $(window).scroll(function () {
+//     $('#notes').css('margin-top', $(this).scrollTop());
+// });
 
 
 // Animations for Splash page
