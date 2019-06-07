@@ -69,34 +69,42 @@ $(document).on("click", "#savenote", function (event) {
 });
 
 
-// // When you click the savenote button
-// $(document).on("click", "#savenote", function () {
-//     // Grab the id associated with the Sale from the submit button
-//     var thisId = $(this).attr("data-id");
+// Save to your local collection when Save Sale is clicked - WORKING for one user
+$(document).on("click", ".save-sale", function (event) {
+    event.preventDefault();
 
-//     // Run a POST request to change the note, using what's entered in the inputs
-//     $.ajax({
-//         method: "POST",
-//         url: "/sales/" + thisId,
-//         data: {
-//             // Value taken from title input
-//             title: $("#titleinput").val(),
-//             // Value taken from note textarea
-//             body: $("#bodyinput").val()
-//         }
-//     })
-//         // With that done
-//         .then(function (data) {
-//             // Log the response
-//             console.log(data);
-//             // Empty the notes section
-//             $("#notes").empty();
-//         });
+    // Grab the id associated with the Sale from the submit button
+    var thisId = $(this).attr("data-id");
+    // Check if the current value is false; if so, we'll save it as true, and vice versa
+    var saved = $(this).attr("data-saved") === "false";
 
-//     // Also, remove the values entered in the input and textarea for note entry
-//     $("#titleinput").val("");
-//     $("#bodyinput").val("");
-// });
+    // Reset the DOM data attribute for saved
+    if (saved) {
+        $(this).css("color", "#FF7870");
+        $(this).css("text-shadow", "0px 0px 4px rgba(153, 69, 69, 0.627)");
+    }
+    else {
+        $(this).css("color", "inherit");
+        $(this).css("text-shadow", "0px 0px 4px rgba(0, 0, 0, 0.627)");
+    }
+    $(this).attr("data-saved", saved)
+
+    // Run a POST request to change the note, using what's entered in the inputs
+    $.ajax({
+        method: "PUT",
+        url: "/sales/" + thisId,
+        data: {
+            // Value taken from title input
+            saved: saved,
+        }
+    })
+        // With that done
+        .then(function (data) {
+            // Log the response
+            console.log(data);
+
+        });
+});
 
 //keep note area on screen
 $(window).scroll(function () {

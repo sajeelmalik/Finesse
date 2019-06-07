@@ -11,7 +11,13 @@
 				<h4 style="color: white">Sale Price: <span>{{price}}</span></h4>
 				<div class="uk-flex uk-flex-between">
 					<button class="uk-button add-note" data-id="{{_id}}"><i class="fas fa-pen"></i></button>
-					<button class="uk-button save-note" data-id="{{_id}}"><i class="fas fa-heart"></i></i></button>
+					
+					<button class="uk-button save-sale" data-id="{{_id}}" data-saved="{{saved}}" {{#if saved}}
+						style="color: #FF7870"{{/if}}><i class="fas fa-heart"></i></i></button>
+					{{!-- {{else}}
+					<button class="uk-button save-sale" data-id="{{_id}}" data-saved="{{saved}}"><i
+							class="fas fa-heart"></i></i></button>
+					{{/if}} --}}
 				</div>
 			</div>
 

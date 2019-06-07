@@ -16,6 +16,15 @@ h2{
     font-family: 'Playfair Display', serif;
 }
 
+.uk-breadcrumb > li img {
+    height: 30px;
+    margin: 0;
+}
+
+.zara{
+    height: 15px !important;
+}
+
 .sale-items{  
     display: flex;
     justify-content: space-evenly;
@@ -127,7 +136,7 @@ a:hover{
     font-size: 18px;
 }
 
-.save-note, .add-note{
+.save-sale, .add-note{
     transition: 0.2s ease-in-out;
     border-radius: 50%;
     height: 60px;
@@ -137,16 +146,18 @@ a:hover{
     justify-content: center;
     background-color: rgb(233, 230, 230);
     text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.627);
+    text-shadow: 0px 0px 4px rgba(153, 69, 69, 0.627);
+
     box-shadow: 0px 2px 3px rgb(56, 155, 110, 0.6);
 }
 
-.save-note:hover, .add-note:hover{
+.save-sale:hover, .add-note:hover{
     background-color: #5DD39E;
     color: white;
     box-shadow: 0px 2px 5px rgb(56, 155, 110, 0.7);
 }
 
-.save-note:active, .add-note:active{
+.save-sale:active, .add-note:active{
     background-color: rgb(56, 155, 110);
     letter-spacing: 1px;
 }

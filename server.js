@@ -48,7 +48,83 @@ var db = require("./models");
 
 // GET route for scraping
 app.get("/", function (req, res) {
+
+    res.redirect("/splash");
     // First, we grab the body of the html with axios
+    // axios.get("https://www2.hm.com/en_us/sale/men/view-all.html")
+    //     .then(function (response) {
+    //         // Then, we load that into cheerio and save it to $ for a shorthand selector
+    //         var $ = cheerio.load(response.data);
+    //         const home = "https://www2.hm.com/";
+
+    //         var saleItems = [];
+
+    //         // Iterate through each class of "product item" on the page to scrape the specific sales
+    //         $("li.product-item").each(function (i, element) {
+    //             // Save an empty result object
+    //             var result = {};
+
+    //             // Add text and href of every link, and save them as properties of the result object
+    //             result.title = $(this).find("h3.item-heading").children("a").text();
+    //             result.link = home + $(this).find("div.image-container").children("a").attr("href");
+    //             result.price = $(this).find("strong.item-price").children("span.sale").text();
+    //             if ($(this).find(".item-image").attr("src")) {
+    //                 result.image = $(this).find(".item-image").attr("src");
+    //             }
+    //             else {
+    //                 result.image = $(this).find(".item-image").attr("data-src");
+    //             }
+
+    //             saleItems.push(result);
+    //         });
+
+    //         // return res.send("hello"); //temporary debugging test
+
+    //         // Create a new Sale using the `result` object built from scraping
+    //         db.Sale.insertMany(saleItems)
+    //             // Initial attempt - works perfectly locally 
+    //             .then(function (dbSale) {
+    //                 // Push the added result to our array to develop our JSON - here, I attempted to redirect to /home instead of directly rendering the index as a potential solution to an asynchornicity problem
+
+    //                 // res.render("index", { item: dbSale });
+    //                 res.redirect("/home")
+    //             })
+    //             .catch(function (err) {
+    //                 // send error to client
+    //                 return res.json(err);
+    //             });
+
+    //         //====Debugging attempt 2 - try/catch/finally
+    //         // try {
+    //         //     db.Sale.insertMany(saleItems)
+    //         // } catch (err) {
+    //         //     console.log(err)
+    //         // } finally {
+    //         //     res.redirect("/home")
+    //         // }
+
+    //         //====Debugging attempt 3 - timeout
+    //         // setTimeout(function(){
+    //         //     axios.get("/sales")
+    //         //         // With that done, add the note information to the page
+    //         //         .then(function (data) {
+    //         //             res.render("index", { item: data });
+    //         //         });
+    //         // }, 5000)
+
+
+
+    //     })
+    //     //====Debugging attempt 4 - add a catch to the axios.get
+    //     .catch(function (err) {
+    //         // send error to client
+    //         return res.json(err);
+    //     });
+
+
+});
+
+app.get("/scrape", function (req, res) {
     axios.get("https://www2.hm.com/en_us/sale/men/view-all.html")
         .then(function (response) {
             // Then, we load that into cheerio and save it to $ for a shorthand selector
@@ -72,6 +148,7 @@ app.get("/", function (req, res) {
                 else {
                     result.image = $(this).find(".item-image").attr("data-src");
                 }
+                result.store = "H&M";
 
                 saleItems.push(result);
             });
@@ -91,26 +168,6 @@ app.get("/", function (req, res) {
                     // send error to client
                     return res.json(err);
                 });
-
-            //====Debugging attempt 2 - try/catch/finally
-            // try {
-            //     db.Sale.insertMany(saleItems)
-            // } catch (err) {
-            //     console.log(err)
-            // } finally {
-            //     res.redirect("/home")
-            // }
-
-            //====Debugging attempt 3 - timeout
-            // setTimeout(function(){
-            //     axios.get("/sales")
-            //         // With that done, add the note information to the page
-            //         .then(function (data) {
-            //             res.render("index", { item: data });
-            //         });
-            // }, 5000)
-
-
 
         })
         //====Debugging attempt 4 - add a catch to the axios.get
@@ -193,13 +250,25 @@ app.post("/sales/:id", function (req, res) {
             return db.Sale.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
         })
         .then(function (dbSale) {
-            // If we were able to successfully update an Sale, send it back to the client
+            // If we were able to successfully update a Sale, send it back to the client
             res.json(dbSale);
         })
         .catch(function (err) {
             // If an error occurred, send it to the client
             res.json(err);
         });
+});
+
+app.put("/sales/:id", function (req, res) {
+    // Create a new note and pass the req.body to the entry
+    console.log("body", req.body);
+
+    db.Sale.findOneAndUpdate({ _id: req.params.id }, { saved: req.body.saved })
+    .then(function(dbSale){
+        // If we were able to successfully update a Sale's saved value, send it back to the client
+        res.json(dbSale)
+    });
+
 });
 
 app.get("/saved", function (req, res) {
