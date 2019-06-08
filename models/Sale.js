@@ -11,12 +11,14 @@ var SaleSchema = new Schema({
   // `title` is required and of type String
   title: {
     type: String,
-    required: true
+    required: true,
   },
-  // `link` is required and of type String. Can make unique:true ONLY if the scraping is done independently, since otherwise the root route will always throw an erro
+  // `link` is required and of type String. Can make unique:true ONLY if the scraping is done independently, since otherwise the root route will always throw an error
   link: {
     type: String,
-    required: true
+    required: true, 
+    unique: true
+
   },
   // `image` is required and of type String
   image: {

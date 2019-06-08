@@ -162,11 +162,15 @@ app.get("/scrape", function (req, res) {
                     // Push the added result to our array to develop our JSON - here, I attempted to redirect to /home instead of directly rendering the index as a potential solution to an asynchornicity problem
 
                     // res.render("index", { item: dbSale });
-                    res.redirect("/home")
+                    res.redirect("/home");
                 })
                 .catch(function (err) {
-                    // send error to client
-                    return res.json(err);
+                    // error is actually in the backend
+                    console.log(err);
+                    // return res.json(err); // send error to client 
+
+                    //redirect to home
+                    return res.redirect("/home");
                 });
 
         })
