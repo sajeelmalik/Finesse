@@ -14,14 +14,12 @@
 					
 					<button class="uk-button save-sale" data-id="{{_id}}" data-saved="{{saved}}" {{#if saved}}
 						style="color: #FF7870"{{/if}}><i class="fas fa-heart"></i></i></button>
-					{{!-- {{else}}
-					<button class="uk-button save-sale" data-id="{{_id}}" data-saved="{{saved}}"><i
-							class="fas fa-heart"></i></i></button>
-					{{/if}} --}}
 				</div>
 			</div>
 
 		</a>
+		<div class = "sale-source"><img src="assets/images/{{store}}.png"></div>
+		<div class = "sale-price">{{price}}</div>
 	</div>
 
 	{{!-- <h5>Sale Price: <span>{{price}}</span></h5>

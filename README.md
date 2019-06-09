@@ -134,7 +134,3 @@ Handlebars.js provides the unique utility of allowing "blocks" for elements that
 
 * **Sajeel Malik** - Software Developer, *Initial work* - [GitHub](https://github.com/sajeelmalik)
 
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details

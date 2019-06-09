@@ -99,6 +99,29 @@ h2{
     transform: translateY(0); 
 }
 
+.sale-source{
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    height: 30px;
+}
+
+.sale-source img{
+    height: 100%;
+}
+
+.sale-price{
+    position: absolute;
+    width: auto;
+    background-color: rgba(27, 27, 27, 0.8);
+    font-size: 0.85em;
+    color: white;
+    bottom: 10px;
+    right: 10px;
+    padding: 2px 5px 2px 5px;
+    border-radius: 2px;
+}
+
 #notes {
     position: fixed;
     width: 15%;
