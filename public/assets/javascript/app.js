@@ -66,9 +66,6 @@ $(document).on("click", "#savenote", function (event) {
                 $("#notes").empty();
 
             });
-            // setTimeout(function () {
-            //     $("#notes").empty();
-            // }, 500);
         });
 
     // Also, remove the values entered in the input and textarea for note entry
@@ -135,4 +132,26 @@ $(document).on("click", "#about", function (event) {
     }
 });
 
+// show scroll-top button after certain distance
 
+$(window).scroll(function() {
+    // declare variable
+    var y = $(this).scrollTop();
+
+    // console.log(y);
+
+    // if user scrolls down - show scroll to top button
+    if (y > 700) {
+        $(".scroll-top").css({"opacity": "1", "transform": "translateY(0px)"})
+
+    } else {
+      $(".scroll-top").css({"opacity": "0", "transform": "translateY(50px)"});
+
+    }
+
+  });
+
+
+$(document).on("click", ".scroll-top", function () {
+    $("html").animate({scrollTop: 0}, 500);
+});
