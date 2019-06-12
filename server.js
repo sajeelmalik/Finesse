@@ -149,6 +149,7 @@ app.get("/scrape", function (req, res) {
                     result.image = $(this).find(".item-image").attr("data-src");
                 }
                 result.store = "H&M";
+                // result.imageURL = "assets/images/H&M.png";
 
                 saleItems.push(result);
             });
