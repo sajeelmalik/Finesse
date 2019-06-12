@@ -1,7 +1,6 @@
 // Usable globals
 var modalOpened = false;
 
-
 // On-click listener for Add Note
 $(document).on("click", ".add-note", function (event) {
     event.preventDefault();
@@ -135,10 +134,7 @@ $(document).on("click", "#about", function (event) {
 // show scroll-top button after certain distance
 
 $(window).scroll(function() {
-    // declare variable
     var y = $(this).scrollTop();
-
-    // console.log(y);
 
     // if user scrolls down - show scroll to top button
     if (y > 700) {
@@ -146,7 +142,6 @@ $(window).scroll(function() {
 
     } else {
       $(".scroll-top").css({"opacity": "0", "transform": "translateY(50px)"});
-
     }
 
   });
