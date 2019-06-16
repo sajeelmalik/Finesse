@@ -147,6 +147,62 @@ $(window).scroll(function() {
   });
 
 
+// AUTHENTICATION AJAX CALLS FOR LOGIN, SIGNUP, AND SIGNOUT
+
+// LOGIN
+$(".login-submit").on('click', function (e) {
+    e.preventDefault();
+    var email = $("#login-email").val();
+    var password = $("#login-password").val();
+    $.ajax({
+        type: "POST",
+        url: '/signin',
+        data: {
+            email: email,
+            password: password
+        },
+        success: function () {
+            document.location = "/home";
+
+        }
+    }, function (data) {
+        // console.log(data);
+    })
+})
+
+
+// SIGNUP
+$(document).on('click', ".signup-submit", function (e) {
+
+    e.preventDefault();
+    // if ($("input[name=userName]").val().trim() === "" || $("input   [name=userPassword]").val() === "" || $("input[name=userEmail]").val() === "") {
+    //     $("#sign-up-error").show(200);
+    // } else {
+    //     $("#sign-up-error").hide();
+    //     $("#sign-up-error-email").hide();
+    //     $("#sign-up-success").show(200);
+
+        var newUser = {
+            name: $("#userName").val().trim(),
+            password: $("#userPassword").val(),
+            email: $("#userEmail").val()
+        }
+        $.ajax({
+            type: "POST",
+            url: '/signup',
+            data: newUser,
+            success: function () {
+                $(".signup-submit").replaceWith("<div class='lds-roller'><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>");
+                setTimeout(function(){
+                    document.location = "/home";
+                }, 2000)
+            }
+        })
+
+        console.log(newUser);
+    })
+
 $(document).on("click", ".scroll-top", function () {
     $("html").animate({scrollTop: 0}, 500);
 });
+

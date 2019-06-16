@@ -3,8 +3,10 @@
 
 // DEPENDENCIES
 var express = require("express");
+var session    = require('express-session');
 var bodyParser = require("body-parser");
 var logger = require("morgan");
+var passport   = require('passport');
 var mongoose = require("mongoose");
 
 var axios = require("axios");
@@ -43,6 +45,13 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 // Require all models
 var db = require("./models");
+
+// For Passport
+app.use(session({ secret: (process.env.secret || 'michael jordan'),resave: true, saveUninitialized:true, cookie: { secure: false }})); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+//load passport strategies
+require('./config/passport.js')(passport, db.User);
 
 // Routes
 
@@ -269,10 +278,10 @@ app.put("/sales/:id", function (req, res) {
     console.log("body", req.body);
 
     db.Sale.findOneAndUpdate({ _id: req.params.id }, { saved: req.body.saved })
-    .then(function(dbSale){
-        // If we were able to successfully update a Sale's saved value, send it back to the client
-        res.json(dbSale)
-    });
+        .then(function (dbSale) {
+            // If we were able to successfully update a Sale's saved value, send it back to the client
+            res.json(dbSale)
+        });
 
 });
 
@@ -284,6 +293,43 @@ app.get("/saved", function (req, res) {
         res.json(err)
     })
 });
+
+
+app.post('/signup', passport.authenticate('local-signup', {
+    successRedirect: '/home',
+    failureRedirect: '/signup'
+}), function (res, req) {
+    console.log("signing up...")
+});
+
+app.post('/login', passport.authenticate('local-signin', {
+    successRedirect: '/home',
+    failureRedirect: '/login'
+}), function (res, req) {
+    console.log("signing in...")
+}
+);
+
+app.get('/signout', function (req, res) {
+    res.clearCookie('userid');
+
+    req.session.destroy(function (err) {
+
+        res.redirect('/');
+
+    });
+});
+
+// function designed to check login state
+function isLoggedIn(req, res, next) {
+
+    if (req.isAuthenticated())
+
+        return next();
+
+    res.redirect('/signin');
+
+}
 
 // Start the server
 app.listen(PORT, function () {
