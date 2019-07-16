@@ -1,13 +1,17 @@
-<div id="login-page" class = "uk-animation-fade">
+<div id="login-page" class="uk-animation-fade">
     <h1 class="title auth-title">Finesse</h1>
     <h4 style="color: white">Welcome Back</h4>
     <div class="auth-buttons login-buttons">
-        <form class="uk-form" action="" id="login-form">
-            <b><label class="uk-form-label" for="userEmail">Email : </label></b>
-            <input class="uk-input" name='userEmail' id="login-email" type="text" required>
-            <b><label class="uk-form-label" for="userPassword">Password: </label></b>
-            <input class="uk-input" name='userPassword' id="login-password" type="password" required>
+        <form class="uk-form" action="POST" id="login-form">
+            <b><label class="uk-form-label" for="login-email">Email : </label></b>
+            <input class="uk-input" name='login-email' id="login-email" type="text" autocomplete="on" required>
+            <b><label class="uk-form-label" for="login-password">Password: </label></b>
+            <input class="uk-input" name='login-password' id="login-password" type="password" autocomplete="off"
+                required>
         </form>
         <a href="/home" class="uk-button login-submit">Login</a>
+        <a href="/signup" style="margin-top: 50px;">
+                        <h5 style="font-family: 'Playfair Display', serif; color: white; text-align: center;">Or, sign up to become a finesser.</h5>
+                  </a>
     </div>
 </div>

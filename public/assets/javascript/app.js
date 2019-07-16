@@ -1,5 +1,16 @@
 // Usable globals
 var modalOpened = false;
+// var userID = Cookies.get('userid');
+
+// if (userID) {
+
+//     // SHOW WELCOME SCREEN TO USER
+//     $.get(`/api/users/${userID}`, function (err, data) {
+//         if (err) throw err;
+//     }).then(data => {
+//         $("#logged-in-user").text(data.name);
+//     });
+// }
 
 // On-click listener for Add Note
 $(document).on("click", ".add-note", function (event) {
@@ -191,15 +202,54 @@ $(document).on('click', ".signup-submit", function (e) {
             type: "POST",
             url: '/signup',
             data: newUser,
-            success: function () {
-                $(".signup-submit").replaceWith("<div class='lds-roller'><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>");
-                setTimeout(function(){
-                    document.location = "/home";
-                }, 2000)
-            }
-        })
+            success: function (res) {
+                // $(".signup-submit").replaceWith("<div class='lds-roller'><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>");
+                // setTimeout(function(){
+                //     document.location = "/home";
+                // }, 2000)
 
-        console.log(newUser);
+               
+            }
+        }).then(function(res){
+            console.log("res",res);
+        });
+
+        // console.log(newUser);
+    })
+
+// LOGIN
+
+$(document).on('click', ".login-submit", function (e) {
+
+    e.preventDefault();
+    // if ($("input[name=userName]").val().trim() === "" || $("input   [name=userPassword]").val() === "" || $("input[name=userEmail]").val() === "") {
+    //     $("#sign-up-error").show(200);
+    // } else {
+    //     $("#sign-up-error").hide();
+    //     $("#sign-up-error-email").hide();
+    //     $("#sign-up-success").show(200);
+
+        var user = {
+            password: $("#login-password").val(),
+            email: $("#login-email").val()
+        }
+        $.ajax({
+            type: "POST",
+            url: '/login',
+            data: user,
+            success: function (res) {
+                // $(".login-submit").replaceWith("<div class='lds-roller'><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>");
+                // setTimeout(function(){
+                //     document.location = "/home";
+                // }, 2000)
+
+               
+            }
+        }).then(function(res){
+            console.log("res",res);
+        });
+
+        // console.log(newUser);
     })
 
 $(document).on("click", ".scroll-top", function () {

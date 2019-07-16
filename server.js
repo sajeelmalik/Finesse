@@ -1,20 +1,28 @@
 // Sajeel Malik
 // server.js for Finesse
 
-// DEPENDENCIES
+// ========================= INITIALIZATION =========================
+// Set up dotenv for session secret key.
+// require('dotenv').config();
+
+// ========================= DEPENDENCIES ===========================
+
 var express = require("express");
-var session    = require('express-session');
-var bodyParser = require("body-parser");
+var session = require('express-session');
+var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-var passport   = require('passport');
+var passport = require('passport');
 var mongoose = require("mongoose");
+var bCrypt = require("bcrypt");
 
 var axios = require("axios");
 var cheerio = require("cheerio");
 
 var PORT = process.env.PORT || 8000;
 
-// Initialize Express
+// ======================= EXPRESS =======================
+
+// Initialize express app
 var app = express();
 
 var exphbs = require("express-handlebars");
@@ -22,16 +30,16 @@ var exphbs = require("express-handlebars");
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-// Configure middleware
+//======================= MIDDLEWARE =======================
 
 // Use morgan logger for logging requests
 app.use(logger("dev"));
-// Use body-parser for handling form submissions
-app.use(bodyParser.urlencoded({ extended: true }));
+// Use built in parsing middleware for handling form submissions
+app.use(express.urlencoded({ extended: true }));
 // Use express.static to serve the public folder as a static directory
 app.use(express.static("public"));
 
-// Connect to the Mongo DB
+// ======================= MONGO DB =======================
 
 // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
 
@@ -46,12 +54,38 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 // Require all models
 var db = require("./models");
 
-// For Passport
-app.use(session({ secret: (process.env.secret || 'michael jordan'),resave: true, saveUninitialized:true, cookie: { secure: false }})); // session secret
+// ======================= PASSPORT =======================
+
+app.use(cookieParser());
+
+// load passport strategies
+require('./config/passport')(passport);
+
+app.use(session({ 
+    secret: (process.env.secret || 'keyboard cat'), 
+    resave: true, 
+    saveUninitialized: true, 
+    cookie: {   
+        expires: 2592000000,
+        httpOnly: false,
+        secure: false } 
+    })); // session secret
+
+// Initialize passport authentication 
 app.use(passport.initialize());
-app.use(passport.session()); // persistent login sessions
-//load passport strategies
-require('./config/passport.js')(passport, db.User);
+
+// Persistent login sessions
+app.use(passport.session()); 
+
+// Enable CORS so that browsers don't block requests.
+app.use((req, res, next) => {
+    //access-control-allow-origin http://localhost:3000
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+    next();
+});
 
 // Routes
 
@@ -295,12 +329,77 @@ app.get("/saved", function (req, res) {
 });
 
 
-app.post('/signup', passport.authenticate('local-signup', {
-    successRedirect: '/home',
-    failureRedirect: '/signup'
-}), function (res, req) {
-    console.log("signing up...")
+app.post('/signup', function (req, res, next) {
+
+    // var generateHash = function (password) {
+    //     return bCrypt.hashSync(password, bCrypt.genSaltSync(8), null);
+    // };
+
+    // db.User.find(
+    //     {
+    //         email: req.body.email
+    //     }
+    // ).then(function (user) {
+    //     if (user.email) {
+    //         return res.json({message:'That email is already taken!', user: user});
+
+    //     } else {
+    //         var userPassword = generateHash(req.body.password);
+    //         var data =
+    //         {
+    //             email: req.body.email,
+    //             password: userPassword,
+    //             name: req.body.name,
+    //         };
+    //         console.log("Creating new User", data);
+    //         db.User.create(data).then(function (newUser, created) {
+    //             if (!newUser) {
+    //                 return res.send(false);
+    //             }
+    //             if (newUser) {
+    //                 return res.json(newUser);
+    //             }
+    //         });
+    //     }
+    // });
+
+    // end test
+    passport.authenticate('local-signup',
+        function (err, user, info) {
+
+            console.log(err, user, info);
+
+            if (err) {
+                console.log("41", err)
+                return next(err);
+            }
+
+            if (!user) {
+                console.log("not a user")
+                // req.flash('notify', 'This is a test notification.')
+                return res.send("Please re-enter your email and password");
+            }
+
+            req.login(user, err => {
+                if (err) {
+                    return next(err);
+                }
+
+                res.cookie("userName", user[0].userName);
+                res.cookie("email", user[0].email)
+                res.cookie("user_id", user[0]._id);
+                var userI = {
+                    username: user[0].userName,
+                    email: user[0].email
+                }
+                //redirect to path containing user id2
+                return res.redirect("/home");
+            })
+
+        })(req, res, next)
+
 });
+
 
 app.post('/login', passport.authenticate('local-signin', {
     successRedirect: '/home',
@@ -327,7 +426,7 @@ function isLoggedIn(req, res, next) {
 
         return next();
 
-    res.redirect('/signin');
+    res.redirect('/login');
 
 }
 

@@ -2,6 +2,7 @@
 
 module.exports = {
     Sale: require("./Sale"),
-    Note: require("./Note")
+    Note: require("./Note"),
+    User: require("./User")
   };
   

@@ -6,13 +6,14 @@
       <div id="signup-right" class="uk-animation-fade">
             <div class="" id="right-content">
                   <h2>Sign Up for Finesse</h2>
-                  <form class="uk-form" action="">
+                  <form class="uk-form" action="POST">
                         <b><label class="uk-form-label" for="userName">Name: </label></b>
-                        <input class="uk-input" name='userName' id='userName' type="text" required>
+                        <input class="uk-input" name='userName' id='userName' type="text" required autocomplete="on">
                         <b><label class="uk-form-label" for="userEmail">Email : </label></b>
-                        <input class="uk-input" name='userEmail' id='userEmail' type="text" required>
+                        <input class="uk-input" name='userEmail' id='userEmail' type="text" required autocomplete="on">
                         <b><label class="uk-form-label" for="userPassword">Password: </label></b>
-                        <input class="uk-input" name='userPassword' id='userPassword' type="password" required>
+                        <input class="uk-input" name='userPassword' id='userPassword' type="password" autocomplete="off"
+                              required>
                   </form>
                   {{!-- originally, a raw link to home --}}
                   {{!-- <a href="/home" class="uk-button signup-submit">Sign Up</a> --}}
@@ -21,7 +22,9 @@
                   {{!-- <p>Or, Sign Up with:</p>
                   <a href="/" class="uk-button uk-button-primary fb-submit">Facebook</a>
                   <a href="/" class="uk-button uk-button-secondary google-submit">Google</a> --}}
-
+                  <a href="/login" style="margin-top: 50px;">
+                        <h5 style="font-family: 'Playfair Display', serif;">Already finessing? Log in here.</h5>
+                  </a>
             </div>
       </div>
 </div>
