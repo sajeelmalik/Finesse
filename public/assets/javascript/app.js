@@ -211,6 +211,10 @@ $(document).on('click', ".signup-submit", function (e) {
                
             }
         }).then(function(res){
+            $(".signup-submit").replaceWith("<div class='lds-roller'><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>");
+                setTimeout(function(){
+                    document.location = "/home";
+                }, 2000)
             console.log("res",res);
         });
 
@@ -246,6 +250,10 @@ $(document).on('click', ".login-submit", function (e) {
                
             }
         }).then(function(res){
+            $(".login-submit").replaceWith("<div class='lds-roller'><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>");
+                setTimeout(function(){
+                    document.location = "/home";
+                }, 2000)
             console.log("res",res);
         });
 
