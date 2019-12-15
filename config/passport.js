@@ -26,8 +26,8 @@ module.exports = function (passport) {
     // deserialize user 
     passport.deserializeUser(function (id, done) {
 
-
-        db.User.findById(id).then(function (user) {
+        // send both user and error in callback!
+        db.User.findById(id).then(function (user, err) {
             if (user) {
 
                 done(null, user.get());
